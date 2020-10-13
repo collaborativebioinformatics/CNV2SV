@@ -11,19 +11,22 @@
 #TODO: Align unmatched CNV sequences against dup/del sequences from assembly-assembly vcf file (distant matching), this will allow checking for non-adjacent CNVs
 #TODO: Confirm results
 
+import os
 import sys
 import intervaltree
 import collections
 import subprocess
 import json
 
-#cnv_vfc_file=sys.argv[1]      #CNV calls output vcf file (calls made on GRCH38 with chm13 reads)
-#asm_asm_vcf_file=sys.argv[2]  #dipcall output vcf file (CHM13 vs GRCH38 assembly-assembly alignment)
-#ref_file=sys.argv[3]          #Reference file (GRCH38)
+version="1.0b"
 
-cnv_vcf_file="liftover/PCRfree.combined.genotyped.vcf"
-asm_asm_vcf_file="data/chm13_grch38.pair.vcf"
-ref_file="liftover/GRCh38.no_alt_analysis_set.fa"
+cnv_vcf_file=sys.argv[1]       #CNV calls output vcf file (calls made on GRCH38 with chm13 reads)
+asm_asm_vcf_file=sys.argv[2]   #dipcall output vcf file (CHM13 vs GRCH38 assembly-assembly alignment)
+ref_file=sys.argv[3]           #Reference file (GRCH38)
+output_dir=sys.argv[4].strip() #Output directory to store the resulting files
+
+if not os.path.exists(output_dir):
+    os.mkdir(output_dir)
 
 svtype_filter=["DUP"]
 
@@ -195,14 +198,16 @@ for var in cnvs:
     #Implemented for duplications only for now..
     #assert(putative_svtype==var["svtype"])
 
-h=open("cnvlink_adjacent.fasta","w")
+h=open("%s/cnvlink_adjacent.fasta"%output_dir,"w")
 for var in cnvs:
     if var["status"]=="adjacent_perfect" or var["status"]=="adjacent":
         h.write(">%s\n%s\n"%(var["id"],var["cnv_seq_padded"]))
 h.close()
 
-h=open("cnvlink_adjacent_out.tsv","w")
-h.write("cnv_id\tstatus\tfail_reason\ttype\tchr\taln_score\tcnv_start\tcnv_length\tasm_start\tasm_length\tcnv_seq\tasm_seq\n")
+h=open("%s/cnvlink_adjacent_out.tsv"%output_dir,"w")
+h.write("#generated with cnvlink %s\n"%version)
+h.write("#cmd: %s\n"%" ".join(sys.argv))
+h.write("#cnv_id\tstatus\tfail_reason\ttype\tchr\taln_score\tcnv_start\tcnv_length\tasm_start\tasm_length\tcnv_seq\tasm_seq\n")
 for var in sorted(cnvs,key=lambda v: v["aln_score"] if "aln_score" in v else -1,reverse=True):
     if var["status"]=="not_included" or var["status"]=="no_match":
         continue
@@ -222,6 +227,6 @@ for var in sorted(cnvs,key=lambda v: v["aln_score"] if "aln_score" in v else -1,
 h.close()
 
 print(stats)
-h=open("cnvlink_stats.json","w")
+h=open("%s/cnvlink_stats.json"%output_dir,"w")
 h.write(json.dumps(stats))
 h.close()

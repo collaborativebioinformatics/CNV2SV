@@ -1,0 +1,1 @@
+{"putative_counts": {"DUP": 10627, "DEL": 6216}, "cnv_call_counts": {"DUP": 282, "DEL": 0}, "matched_counts": {"DUP": 0, "DEL": 0}, "perfect_counts": {"DUP": 0, "DEL": 0}, "no_overlap_counts": {"DUP": 165, "DEL": 0}, "multihit_counts": {"DUP": 71, "DEL": 0}, "nonsense_counts": {"DUP": 12, "DEL": 0}, "badalign_counts": {"DUP": 34, "DEL": 0}}
