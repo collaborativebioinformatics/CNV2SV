@@ -4,7 +4,7 @@
   
 The root cause of the copy number variations is from the underlying genome structure changes. Most detection methods / technologies only take care about whether there are additional copies or missing at one particular locus.  In the light of better DNA detection / sequencing technology, it is possible to construct a full picture of a genome. We would like to address the missing links from CNV detection to the full genome sequence information. In the future, this may help to understand whether the detailed information, e.g. breaking points, of the additional or missing copies are indeed important as makers for pathogenic effects.
 
-## Aims and Methods
+## Aims
 
 We will focus on a couple of genomes that have data from various sequencing technologies where the best genome assemblies and short reads are easy to get. The first target is the T2T2 CHM13. While it is a haploid genome and it will not reflect the "real world" use cases, it will simplify the "equation" so we can develop methods before jumping into a jungle where the information is too complicated to analyze initially.  
 
@@ -26,7 +26,7 @@ Make some visualization of the identified CNV, potentially focus on pathogenic a
 
 Explore the infrastructure for automation of these processes and make a gallery all related to CNV / SV for demonstration.
 
-
+## Methods
 
 <!--- ## Awesome Logo -->
 
@@ -37,3 +37,15 @@ Overview Diagram
 <!---
 # Software Workflow Diagram
 -->
+
+### CNV/SV calling from short read data
+
+We are using Parliament for SV/CNV calls from the short read data. We rely on both CNVnator individual calls and combined calls to get the potential duplication locations. Additionally we also run Control-FREEC to estimate the copy number for different regions of the genome based on the short read data. The Control-FREEC output is converted into BED and VCF files for downstream processing.
+
+### Assembly alignment and SV calling
+
+We use the draft assembly of CHM13 T2T genome. We align it to the reference GRCh38 human genome using dipcall, by building a simulated diploid genome via using two copies of CHM13. We then construct dot plots of the alignment to identify potential regions of interest, and extarct a VCF for downstream processing.
+
+### CNV/SV linking
+
+Moritz Smolka has developed a Python script for merging short read and assembly based CNV/SV calls to locate regions in which the duplication events overlap. We are currently workign on additional visualization scripts for the final product.
