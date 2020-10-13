@@ -56,4 +56,4 @@ Moritz Smolka has developed a Python script for merging short read and assembly 
 
 ### cnvlink.py results overview
 Here, an example for the raw output (CNV - SNV links) produced by cnvlink.py is shown. Upcoming work includes visualizing key elements from these raw data.
-![First results](/images/data_example_parliament.png )
+![First results](/images/data_example_parliament_new.png)
