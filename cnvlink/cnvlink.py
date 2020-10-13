@@ -207,19 +207,20 @@ h.close()
 h=open("%s/cnvlink_adjacent_out.tsv"%output_dir,"w")
 h.write("#generated with cnvlink %s\n"%version)
 h.write("#cmd: %s\n"%" ".join(sys.argv))
-h.write("#cnv_id\tstatus\tfail_reason\ttype\tchr\taln_score\tcnv_start\tcnv_length\tasm_start\tasm_length\tcnv_seq\tasm_seq\n")
+h.write("#cnv_id\tstatus\tfail_reason\ttype\taln_score\tcnv_chr\tcnv_start\tcnv_length\tasm_chr\tasm_start\tasm_length\tcnv_seq\tasm_seq\n")
 for var in sorted(cnvs,key=lambda v: v["aln_score"] if "aln_score" in v else -1,reverse=True):
     if var["status"]=="not_included" or var["status"]=="no_match":
         continue
-    h.write("%s\t%s\t%s\t%s\t%s\t%d\t%d\t%d\t%d\t%d\t%s\t%s\n"%(
+    h.write("%s\t%s\t%s\t%s\t%d\t%s\t%d\t%d\t%s\t%d\t%d\t%s\t%s\n"%(
                                                              var["id"],
                                                              var["status"],
                                                              var["reason"],
                                                              var["svtype"],
-                                                             var["chr"],
                                                              var["aln_score"] if "aln_score" in var else -1,
+                                                             var["chr"],
                                                              var["start"],
                                                              var["length"],
+                                                             var["matched_asm_var"]["chr"] if "matched_asm_var" in var else "*",
                                                              var["matched_asm_var"]["pos"] if "matched_asm_var" in var else -1,
                                                              var["matched_asm_var"]["length"] if "matched_asm_var" in var else -1,
                                                              var["cnv_seq"] if "cnv_seq" in var else "*",
