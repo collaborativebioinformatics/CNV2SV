@@ -38,6 +38,8 @@ Overview Diagram
 # Software Workflow Diagram
 -->
 
+## Tuesday Methods Update
+
 ### CNV/SV calling from short read data
 
 We are using Parliament for SV/CNV calls from the short read data. We rely on both CNVnator individual calls and combined calls to get the potential duplication locations. Additionally we also run Control-FREEC to estimate the copy number for different regions of the genome based on the short read data. The Control-FREEC output is converted into BED and VCF files for downstream processing.
@@ -48,4 +50,10 @@ We use the draft assembly of CHM13 T2T genome. We align it to the reference GRCh
 
 ### CNV/SV linking
 
-Moritz Smolka has developed a Python script for merging short read and assembly based CNV/SV calls to locate regions in which the duplication events overlap. We are currently workign on additional visualization scripts for the final product.
+Moritz Smolka has developed a Python script for merging short read and assembly based CNV/SV calls to locate regions in which the duplication events overlap. We are currently working on additional visualization scripts for the final product.
+
+![cnvlink.py](/images/cnvlink_workflow.png)
+
+### cnvlink.py results overview
+Here, an example for the raw output (CNV - SNV links) produced by cnvlink.py is shown. Upcoming work includes visualizing key elements from these raw data.
+![First results](/images/data_example_parliament.png )
