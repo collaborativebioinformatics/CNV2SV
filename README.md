@@ -4,6 +4,27 @@
   
 The root cause of the copy number variations is from the underlying genome structure changes. Most detection methods / technologies only take care about whether there are additional copies or missing at one particular locus.  In the light of better DNA detection / sequencing technology, it is possible to construct a full picture of a genome. We would like to address the missing links from CNV detection to the full genome sequence information. In the future, this may help to understand whether the detailed information, e.g. breaking points, of the additional or missing copies are indeed important as makers for pathogenic effects.
 
+## Usage
+
+Required input for CNV2SV linking:
+
+* SV and CNV calls in BED or VCF formats (from Parliament2, Control-FREEC, and dipcall)
+
+Required Python (3.8.\*) packages for CNV2SV linking:
+
+* intervaltree
+* biopython
+* samtools
+
+Recommended usage (via DNAnexus):
+
+* Read alignments in BAM format for processing with Parliament2
+* Genome assembly in FASTA format for processing with dipcall
+
+Additional dependencies:
+
+* Control-FREEC (provides CNV calls from short read data, requires per chromosome reference FASTA)
+
 ## Aims
 
 We will focus on a couple of genomes that have data from various sequencing technologies where the best genome assemblies and short reads are easy to get. The first target is the T2T2 CHM13. While it is a haploid genome and it will not reflect the "real world" use cases, it will simplify the "equation" so we can develop methods before jumping into a jungle where the information is too complicated to analyze initially.  
