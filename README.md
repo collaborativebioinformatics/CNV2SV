@@ -66,7 +66,7 @@ R circ.R
 
 ## Output format
 
-cnvlink.py produces linkage information for each CNV as .tsv files. Each row links a CNV to its best matching SV. Information about the additional links with lower scores is included as well.
+cnvlink.py outputs a .tsv file containing SV-linkage information for each CNV. Each row links a CNV to its best matching SV. Information about the additional links with lower scores is included as well.
 
 | Field index | Field name | Description |
 | --------------- | --------------- | --------------- |
