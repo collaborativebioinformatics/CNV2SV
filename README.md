@@ -64,7 +64,36 @@ R circ.R
 
 ```
 
-## TODO
+## Output format
+
+cnvlink.py produces linkage information for each CNV as .tsv files. Each row links a CNV to its best matching SV. Information about the additional links with lower scores is included as well.
+
+| Field index | Field name | Description |
+| --------------- | --------------- | --------------- |
+| 0| cnv_id | The id for the CNV, assigned by the CNV caller |
+| 1| status | Summarizes the SV linkage status of this CNV (no_match, match_adj, perfect_adj, match_far, perfect_far) |
+| 2| reason | Reason why the CNV could not be linked to an adjacent SV, if any. |
+| 3| svtype | DUP or DEL, dependeing on whether the CNV was called as copy number gain or loss |
+| 4| good_matches_adj | Total number of valid adjacent SV links discovered |
+| 5| good_matches_far | Total number of valid distant SV links discovered |
+| 6| alignment_matches | Number of matching characters in the CNV-SV event alignment (mlen value from mappy) |
+| 7| cnv_chr | Chromosome the CNV was called on |
+| 8| cnv_start | Start position of the CNV |
+| 9| cnv_length | Length of the CNV |
+| 10| asm_chr | Chromosome of the best linked SV |
+| 11| asm_start | Start position of the best linked SV |
+| 12| asm_length | Length of the best linked SV |
+| 13| all_good_matches_adj | List of all valid adjacent SV links, separated by commas, in the format chr:start-length |
+| 14| all_good_matches_far | List of all valid distant SV links, separated by commas, in the format chr:start-length |
+| 15| aln_cigar | CIGAR string of the alignment of the CNV sequence to the one of the best linked SV |
+| 16| aln_length | Length of the alignment of the CNV sequence to the one of the best linked SV |
+| 17| aln_NM | Number of mismatches in the alignment of the CNV sequence to the one of the best linked SV |
+| 18| aln_mapq | Mapping quality of the alignment of the CNV sequence to the one of the best linked SV |
+| 19| cnv_seq | Full sequence of the called CNV |
+| 20| asm_seq | Full sequence of the best linked SV |
+
+
+## Limitations
 * Currently, analysis only includes duplication events
 
 ## Aims
