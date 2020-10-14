@@ -147,35 +147,45 @@ Moritz Smolka has developed a Python script for merging short read and assembly 
 ## Results
 
 The plot below captures best linking matches (based on the alignment identity score) between CNVs identified by CNVnator and SVs inferred from dipcall alignment of CHM13 and GRCh38. 
+
 ![CNV2SV links with dot plots](/images/ADJ_matches_dot_plots.png)
+
 We have also highlighted the adjacent duplication events with detailed dot plots based on the CHM13 to GRCh38 alignment. 
 
 ### CNV2SV linkage information plot
 
 The figures below shows linked CNV calls (from CNVnator) and respective SV insertion calls. The site of the CNV call corresponds to the wider end of a chord, and the insertion SV corresponds to the narrower end. First figure shows the best match used for linking, while the second figure shows all potential SV matches that have the alignment identiity of at least 80%.
-![Best CNV2SV link](/images/cnvlink_out_parliament_cnvnator_best_match_resized.png)
-![All CNV2SV links](/images/cnvlink_out_parliament_cnvnator_all_matches_resized.png)
+
+<img src="https://github.com/collaborativebioinformatics/CNV2SV/images/cnvlink_out_parliament_cnvnator_best_match_resized.png" alt="Best CNV2SV link" width="45%">
+<img src=https://github.com/collaborativebioinformatics/CNV2SV/images/cnvlink_out_parliament_cnvnator_all_matches_resized.png alt="All CNV2SV links" width="45%">
 
 ### CNV2SV linkage statistics
 
 Majority of the CNVs identified have not been linked to a SV event, as indicated by the plot below.
+
 ![Linked vs non-linked CNVs](/cnvlink/plots/cnvlink_out_parliament_cnvnator_linked.png)
 
 One of the main reasons for the unsuccesful linking is the length disparity between the called CNV events and SV events. This is shown in the figure below.
+
 ![Length of linked vs non-linked CNVs](/cnvlink/plots/cnvlink_out_parliament_cnvnator_linked.png)
 
 Overall, among linked CNV and SV events we define three major categories: adjacent events, distant events, and events spanning mutiple chromosomes. Distant events are called in the case when the linked SV is at least 1Kbp away from the CNV call (either upstream or downstream). The distirbution of the linked events into these three categories is shown below.
+
 ![Link type by distance distribution](/cnvlink/plots/cnvlink_out_parliament_cnvnator_location.png)
 
 While most links for a single CNV event are unanimously distant or adjacent, we observed an event in which a CNV was linked to both an adjacent and a distant SV events. Details of the distribution of the adjacent and distant events per CNV call are given in the plot below.
+
 ![Adjacent vs far matches](/cnvlink/plots/cnvlink_out_parliament_cnvnator_matches_adj_vs_far.png)
+
 The event resulting in both an adjacent and a distant match occurs on chromosome 7, and the corresponding SV events are:
 
 * *adjacent*: chr7:100997804 length 8325
 * *disatnt*: chr7:100994092 length 3249
 
 The dot plot for these events is provided below.
+
 ![Adjacent and distant event dot plot](/images/chr7_adj_match.png)
 
 Lastly, we note that the alignment quality is better for adjacent matches when compared to more distant SV matches, as indicated in the plot below.
+
 ![Alignment quality for matches](/cnvlink/plots/cnvlink_out_parliament_cnvnator_aln_box.png)
