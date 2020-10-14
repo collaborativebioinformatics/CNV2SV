@@ -44,10 +44,10 @@ gunzip chm13.draft_v1.0.fasta.gz
 gunzip GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 
 #Download CNV calls from T2T CH13 short reads aligned against GRCh38
-curl -O -J https://github.com/collaborativebioinformatics/CNV2SV/blob/main/cnvlink/input_cnv_calls/parliament2/PCRfree.cnvnator.vcf
+curl -O -J https://github.com/collaborativebioinformatics/CNV2SV/blob/main/input_cnv_calls/parliament2/PCRfree.cnvnator.vcf
 
 #Download SV calls from genome-genome alignment of T2T CHM13 vs GRCh38
-curl -O -J https://github.com/collaborativebioinformatics/CNV2SV/blob/main/cnvlink/chm13_alignment/chm13_grch38.pair.vcf
+curl -O -J https://github.com/collaborativebioinformatics/CNV2SV/blob/main/chm13_alignment/chm13_grch38.pair.vcf
 
 #Run cnvlink
 #Links CNV calls from PCRfree.cnvnator.vcf to SVs in chm13_grch38.pair.vcf (assumes all calls were made against GRCh38.no_alt_analysis_set.fa as ref).
