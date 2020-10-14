@@ -8,22 +8,64 @@ The root cause of the copy number variations is from the underlying genome struc
 
 Required input for CNV2SV linking:
 
-* SV and CNV calls in BED or VCF formats (from Parliament2, Control-FREEC, and dipcall)
+* CNV calls in BED or VCF formats (from Parliament2, Control-FREEC)
+* Putative SVs from genome-genome alignment (vcf format, from dipcall)
+* .fa files for both assembly versions
 
 Required Python (3.8.\*) packages for CNV2SV linking:
 
 * intervaltree
-* biopython
-* samtools
+* mappy
+* pyfaidx
+
+Additionally required for visualization of the linking results:
+
+* R, circlize package
+* matplotlib
+* seaborn
+* pandas
+
+Additional dependencies:
+
+* Control-FREEC (provides CNV calls from short read data, requires per chromosome reference FASTA)
 
 Recommended usage (via DNAnexus):
 
 * Read alignments in BAM format for processing with Parliament2
 * Genome assembly in FASTA format for processing with dipcall
 
-Additional dependencies:
+Quickstart using example data (CHM13 vs GRCh38):
 
-* Control-FREEC (provides CNV calls from short read data, requires per chromosome reference FASTA)
+```bash
+#Download reference
+curl -O -J https://s3.amazonaws.com/nanopore-human-wgs/chm13/assemblies/chm13.draft_v1.0.fasta.gz
+curl -O -J https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
+gunzip chm13.draft_v1.0.fasta.gz
+gunzip GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
+
+#Download CNV calls from T2T CH13 short reads aligned against GRCh38
+curl -O -J https://github.com/collaborativebioinformatics/CNV2SV/blob/main/cnvlink/input_cnv_calls/parliament2/PCRfree.cnvnator.vcf
+
+#Download SV calls from genome-genome alignment of T2T CHM13 vs GRCh38
+curl -O -J https://github.com/collaborativebioinformatics/CNV2SV/blob/main/cnvlink/chm13_alignment/chm13_grch38.pair.vcf
+
+#Run cnvlink
+#Links CNV calls from PCRfree.cnvnator.vcf to SVs in chm13_grch38.pair.vcf (assumes all calls were made against GRCh38.no_alt_analysis_set.fa as ref).
+#Output is saved to cnvlink_out_parliament_cnvnator
+python cnvlink.py PCRfree.cnvnator.vcf chm13_grch38.pair.vcf GRCh38.no_alt_analysis_set.fa cnvlink_out_parliament_cnvnator
+
+
+#Visualize CNV-SV linkage statistics
+python visualize.py cnvlink_out_parliament_cnvnator
+
+#Circlize plot connecting position of CNV calls to linked SV insertion sites
+python cnv_tsv_to_bed.py cnvlink_out_parliament_cnvnator/cnvlink_out.tsv
+R circ.R
+
+```
+
+## TODO
+* Currently, analysis only includes duplication events
 
 ## Aims
 
