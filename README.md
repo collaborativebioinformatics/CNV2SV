@@ -156,8 +156,8 @@ We have also highlighted the adjacent duplication events with detailed dot plots
 
 The figures below shows linked CNV calls (from CNVnator) and respective SV insertion calls. The site of the CNV call corresponds to the wider end of a chord, and the insertion SV corresponds to the narrower end. First figure shows the best match used for linking, while the second figure shows all potential SV matches that have the alignment identiity of at least 80%.
 
-<img src="https://github.com/collaborativebioinformatics/CNV2SV/images/cnvlink_out_parliament_cnvnator_best_match_resized.png" alt="Best CNV2SV link" width="45%">
-<img src=https://github.com/collaborativebioinformatics/CNV2SV/images/cnvlink_out_parliament_cnvnator_all_matches_resized.png alt="All CNV2SV links" width="45%">
+<img src="https://github.com/collaborativebioinformatics/CNV2SV/blob/main/images/cnvlink_out_parliament_cnvnator_best_match_resized.png" alt="Best CNV2SV link" width="45%">
+<img src="https://github.com/collaborativebioinformatics/CNV2SV/blob/main/images/cnvlink_out_parliament_cnvnator_all_matches_resized.png" alt="All CNV2SV links" width="45%">
 
 ### CNV2SV linkage statistics
 
