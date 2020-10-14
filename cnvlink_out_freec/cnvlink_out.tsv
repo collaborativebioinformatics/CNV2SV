@@ -1,0 +1,3 @@
+#generated with cnvlink 1.0b
+#cmd: cnvlink.py input_cnv_calls/FREEC_out/chm13_markdup3.bam_CNVs.vcf ../../data/chm13_grch38.pair.vcf ../../liftover/GRCh38.no_alt_analysis_set.fa cnvlink_out_freec
+#cnv_id	status	fail_reason	type	good_matches_adj	good_matches_far	alignment_matches	cnv_chr	cnv_start	cnv_length	asm_chr	asm_start	asm_length	all_good_matches_adj	all_good_matches_far	aln_cigar	aln_length	aln_NM	aln_mapq	cnv_seq	asm_seq
