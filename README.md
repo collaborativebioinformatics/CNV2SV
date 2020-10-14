@@ -167,10 +167,6 @@ Majority of the CNVs identified have not been linked to a SV event, as indicated
 
 ![Linked vs non-linked CNVs](/cnvlink/plots/cnvlink_out_parliament_cnvnator_linked.png)
 
-One of the main reasons for the unsuccesful linking is the length disparity between the called CNV events and SV events. This is shown in the figure below.
-
-![Length of linked vs non-linked CNVs](/cnvlink/plots/cnvlink_out_parliament_cnvnator_lengthdiff_box.png)
-
 Overall, among linked CNV and SV events we define three major categories: adjacent events, distant events, and events spanning mutiple chromosomes. Distant events are called in the case when the linked SV is at least 1Kbp away from the CNV call (either upstream or downstream). The distirbution of the linked events into these three categories is shown below.
 
 ![Link type by distance distribution](/cnvlink/plots/cnvlink_out_parliament_cnvnator_location.png)
