@@ -10,9 +10,11 @@
 
 #TODO: Confirm results
 #TODO: Document output file fields (.tsv)
+#TODO: Create conda package, set dependency versions
 
 #CAUTION: How to deal with repeats called as CNVs
 #CAUTION: Deletions analysis not implemented yet
+#CAUTION: Output in the all_good_matches_adj and all_good_matches_far currently has the format [chr]:[start]-[length]
 
 import os
 import sys
@@ -22,7 +24,12 @@ import json
 import mappy
 import pyfaidx
 
-version="1.0b"
+version="1.0"
+
+if len(sys.argv)<5:
+    print("cnvlink %s"%version)
+    print("Usage: cnvlink.py cnv.vcf sv.vcf reference.fa output_directory_name")
+    exit()
 
 cnv_vcf_file=sys.argv[1]       #CNV calls output vcf file (calls made on GRCH38 with chm13 reads)
 asm_asm_vcf_file=sys.argv[2]   #dipcall output vcf file (CHM13 vs GRCH38 assembly-assembly alignment)
@@ -385,38 +392,40 @@ h.close()"""
 def fmt_all_matches(matches):
     return ",".join(["%s:%d-%d"%(m["chr"],m["pos"],m["length"]) for m in matches])
 
-h=open("%s/cnvlink_out.tsv"%output_dir,"w")
-h.write("#generated with cnvlink %s\n"%version)
-h.write("#cmd: %s\n"%" ".join(sys.argv))
-h.write("#cnv_id\tstatus\tfail_reason\ttype\tgood_matches_adj\tgood_matches_far\talignment_matches\tcnv_chr\tcnv_start\tcnv_length\tasm_chr\tasm_start\tasm_length\tall_good_matches_adj\tall_good_matches_far\taln_cigar\taln_length\taln_NM\taln_mapq\tcnv_seq\tasm_seq\n")
-for var in sorted(cnvs,key=lambda v: v["alignment"].mlen if "alignment" in v else -1,reverse=True):
-    if var["status"]=="not_included" or var["status"]=="no_match":
-        continue
-    h.write("%s\t%s\t%s\t%s\t%d\t%d\t%d\t%s\t%d\t%d\t%s\t%d\t%d\t%s\t%s\t%s\t%d\t%d\t%d\t%s\t%s\n"%(
-                                                             var["id"],
-                                                             var["status"],
-                                                             var["reason"],
-                                                             var["svtype"],
-                                                             len(var["good_matches_adj"]),
-                                                             len(var["good_matches_far"]),
-                                                             var["alignment"].mlen if "alignment" in var else -1,
-                                                             var["chr"],
-                                                             var["start"],
-                                                             var["length"],
-                                                             var["matched_asm_var"]["chr"] if "matched_asm_var" in var else "*",
-                                                             var["matched_asm_var"]["pos"] if "matched_asm_var" in var else -1,
-                                                             var["matched_asm_var"]["length"] if "matched_asm_var" in var else -1,
-                                                             fmt_all_matches(var["good_matches_adj"]),
-                                                             fmt_all_matches(var["good_matches_far"]),
-                                                             var["alignment"].cigar_str if "alignment" in var else "",
-                                                             var["alignment"].blen if "alignment" in var else -1,
-                                                             var["alignment"].NM if "alignment" in var else -1,
-                                                             var["alignment"].mapq if "alignment" in var else -1,
-                                                             var["cnv_seq"] if "cnv_seq" in var else "*",
-                                                             var["matched_asm_var"]["event_seq"] if "matched_asm_var" in var else "*"))
-h.close()
+def write_results_tsv(filename,filter_bad=True):
+    h=open(filename,"w")
+    h.write("#generated with cnvlink %s\n"%version)
+    h.write("#cmd: %s\n"%" ".join(sys.argv))
+    h.write("#cnv_id\tstatus\tfail_reason\ttype\tgood_matches_adj\tgood_matches_far\talignment_matches\tcnv_chr\tcnv_start\tcnv_length\tasm_chr\tasm_start\tasm_length\tall_good_matches_adj\tall_good_matches_far\taln_cigar\taln_length\taln_NM\taln_mapq\tcnv_seq\tasm_seq\n")
+    for var in sorted(cnvs,key=lambda v: v["alignment"].mlen if "alignment" in v else -1,reverse=True):
+        if filter_bad and (var["status"]=="not_included" or var["status"]=="no_match"):
+            continue
+        h.write("%s\t%s\t%s\t%s\t%d\t%d\t%d\t%s\t%d\t%d\t%s\t%d\t%d\t%s\t%s\t%s\t%d\t%d\t%d\t%s\t%s\n"%(
+                                                                 var["id"],
+                                                                 var["status"],
+                                                                 var["reason"],
+                                                                 var["svtype"],
+                                                                 len(var["good_matches_adj"]),
+                                                                 len(var["good_matches_far"]),
+                                                                 var["alignment"].mlen if "alignment" in var else -1,
+                                                                 var["chr"],
+                                                                 var["start"],
+                                                                 var["length"],
+                                                                 var["matched_asm_var"]["chr"] if "matched_asm_var" in var else "*",
+                                                                 var["matched_asm_var"]["pos"] if "matched_asm_var" in var else -1,
+                                                                 var["matched_asm_var"]["length"] if "matched_asm_var" in var else -1,
+                                                                 fmt_all_matches(var["good_matches_adj"]),
+                                                                 fmt_all_matches(var["good_matches_far"]),
+                                                                 var["alignment"].cigar_str if "alignment" in var else "",
+                                                                 var["alignment"].blen if "alignment" in var else -1,
+                                                                 var["alignment"].NM if "alignment" in var else -1,
+                                                                 var["alignment"].mapq if "alignment" in var else -1,
+                                                                 var["cnv_seq"] if "cnv_seq" in var else "*",
+                                                                 var["matched_asm_var"]["event_seq"] if "matched_asm_var" in var else "*"))
+    h.close()
 
-
+write_results_tsv("%s/cnvlink_out.tsv"%output_dir,filter_bad=True)
+write_results_tsv("%s/cnvlink_out_all.tsv"%output_dir,filter_bad=False)
 
 
 print(stats_adj)

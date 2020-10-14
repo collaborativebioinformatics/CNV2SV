@@ -1,0 +1,5 @@
+library("circlize")
+from<-read.table(file="from.bed", sep = '\t', header = TRUE)
+to<-read.table(file="to.bed", sep = '\t', header = TRUE)
+circos.initializeWithIdeogram()
+circos.genomicLink(from, to, col = rand_color(nrow(from), transparency = 0.5), border = NA)
