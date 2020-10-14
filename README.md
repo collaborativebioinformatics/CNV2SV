@@ -98,13 +98,13 @@ cnvlink.py outputs a .tsv file containing SV-linkage information for each CNV. E
 
 ## Aims
 
-We will focus on a couple of genomes that have data from various sequencing technologies where the best genome assemblies and short reads are easy to get. The first target is the T2T2 CHM13. While it is a haploid genome and it will not reflect the "real world" use cases, it will simplify the "equation" so we can develop methods before jumping into a jungle where the information is too complicated to analyze initially.  
+We will focus on a couple of genomes that have data from various sequencing technologies where the best genome assemblies and short reads are easy to get. The first target is the T2T CHM13. While it is a haploid genome and it will not reflect the "real world" use cases, it will simplify the "equation" so we can develop methods before jumping into a jungle where the information is too complicated to analyze initially.  
 
-The general idea is straight-forward. We will detect CNV using short read data. The alignments and SV (not CNV) calls are straight forward, there are off-shelf solutions. (Yih-chii, Chai and I from DNAnexus has done some preliminary work in the last couple days, so we have some jump-start first without dealing with those long alignment computation tasks.) 
+The general idea is straight-forward. We will detect CNVs using short read data. The alignments and SVs (not CNV) calls are straightforward, there are off-shelf solutions. 
 
 ### Aim1
 
-figure out the right way to call CNV from a germline only WGS data. It seems to me most CNV code in the market is using normal-tumor pairs for calling CNV or only focusing on exomes. We need to find useful tools for germline WGS or come up with some quick way to reanalyze the SVs or variant calls (e.g. het-variant call from CHM13) to identify CNV candidates.
+Figure out the right way to call CNV from a germline only WGS data. It seems to me most CNV code in the market is using normal-tumor pairs for calling CNV or only focusing on exomes. We need to find useful tools for germline WGS or come up with some quick way to reanalyze the SVs or variant calls (e.g. het-variant call from CHM13) to identify CNV candidates.
 
 ### Aim2 
 
@@ -112,11 +112,11 @@ With the CNV candidates called on GRCh38, we will need to find a mapping / lifto
 
 ### Aim3 
 
-Make some visualization of the identified CNV, potentially focus on pathogenic alleles.
+Make a visualization of the identified CNV, potentially focus on pathogenic alleles.
 
 ### Aim4
 
-Explore the infrastructure for automation of these processes and make a gallery all related to CNV / SV for demonstration.
+Explore the infrastructure for automation of these processes and make a gallery all related to CNV/SV for demonstration.
 
 ## Methods
 
@@ -154,10 +154,12 @@ We have also highlighted the adjacent duplication events with detailed dot plots
 
 ### CNV2SV linkage information plot
 
-The figures below shows linked CNV calls (from CNVnator) and respective SV insertion calls. The site of the CNV call corresponds to the wider end of a chord, and the insertion SV corresponds to the narrower end. First figure shows the best match used for linking, while the second figure shows all potential SV matches that have the alignment identiity of at least 80%.
+The figures below shows linked CNV calls (from CNVnator) and respective SV insertion calls. The site of the CNV call corresponds to the wider end of a chord, and the insertion SV corresponds to the narrower end. Figure on the left shows the best match used for linking, while the figure on the right shows all potential SV matches that have the alignment identity of at least 80%.
 
-<img src="https://github.com/collaborativebioinformatics/CNV2SV/blob/main/images/cnvlink_out_parliament_cnvnator_best_match_resized.png" alt="Best CNV2SV link" width="45%">
-<img src="https://github.com/collaborativebioinformatics/CNV2SV/blob/main/images/cnvlink_out_parliament_cnvnator_all_matches_resized.png" alt="All CNV2SV links" width="45%">
+<div display="flex">
+  <img src="https://github.com/collaborativebioinformatics/CNV2SV/blob/main/images/cnvlink_out_parliament_cnvnator_best_match_resized.png" alt="Best CNV2SV link" width="48.5%">
+  <img src="https://github.com/collaborativebioinformatics/CNV2SV/blob/main/images/cnvlink_out_parliament_cnvnator_all_matches_resized.png" alt="All CNV2SV links" width="48.5%">
+</div>
 
 ### CNV2SV linkage statistics
 
@@ -167,7 +169,7 @@ Majority of the CNVs identified have not been linked to a SV event, as indicated
 
 One of the main reasons for the unsuccesful linking is the length disparity between the called CNV events and SV events. This is shown in the figure below.
 
-![Length of linked vs non-linked CNVs](/cnvlink/plots/cnvlink_out_parliament_cnvnator_linked.png)
+![Length of linked vs non-linked CNVs](/cnvlink/plots/cnvlink_out_parliament_cnvnator_lengthdiff_box.png)
 
 Overall, among linked CNV and SV events we define three major categories: adjacent events, distant events, and events spanning mutiple chromosomes. Distant events are called in the case when the linked SV is at least 1Kbp away from the CNV call (either upstream or downstream). The distirbution of the linked events into these three categories is shown below.
 
