@@ -187,3 +187,6 @@ The dot plot for these events is provided below.
 Lastly, we note that the alignment quality is better for adjacent matches when compared to more distant SV matches, as indicated in the plot below.
 
 ![Alignment quality for matches](/cnvlink/plots/cnvlink_out_parliament_cnvnator_aln_box.png)
+
+## References
+circlize : Gu, Z. (2014) circlize implements and enhances circular visualization in R. Bioinformatics. DOI: 10.1093/bioinformatics/btu393
