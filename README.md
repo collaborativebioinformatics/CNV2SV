@@ -6,10 +6,13 @@ The root cause of the copy number variations is from the underlying genome struc
 
 ## System Requirements
 
-CNV2SV has been tested to work on a desktop system with the following specifications:
+CNV2SV has been tested to work on a desktop system on the CHM13 data set with the following specifications:
 * Intel® i7-6700K Processor (4.00Ghz quad-core)
-* 32GB RAM
-* Unix-like operating system or Windows subsystem for Linux (Ubuntu)
+* 32GB RAM (less may be required)
+* 50GB free disk space
+* Unix-like operating system (e.g. Ubuntu-based distribution) or Windows subsystem for Linux running Ubuntu
+
+The initial genome-genome alignment (CHM13 vs GRCh38) was computed on a cloud-based platform (DNANexus).
 
 Required Python (3.8.\*) packages for CNV2SV linking:
 
